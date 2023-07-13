@@ -103,6 +103,7 @@ const UrlSpoof = () => {
     const onClickReset = () => {
         clearTimer(getDeadTime());
     }
+    const [urlIndex, setUrlIndex] = useState(0);
 
     return (
         <div>
@@ -116,16 +117,18 @@ const UrlSpoof = () => {
                 <div>Select the legitimate URL:</div>
                 <div>Time Left: {timer}</div>
                 <br/>
-                {
-                    URLs.map(({option1, option2, option3, val}, index) => {
-                        return (
-                        <div style={{display: 'flex', gap: '10px', paddingBottom: '10px'}}>
-                            <button onClick={() => {closeModal(); alert("That's legitimate")}} style={{all: 'unset', borderRadius: '5px', border: '1px solid black', padding: '0.2vmax 0.5vmax', float: 'right', cursor: 'pointer'}}>https://www.amazon.in/</button>
-                            <button onClick={() => {closeModal(); alert("No No NO NO")}} style={{all: 'unset', borderRadius: '5px', border: '1px solid black', padding: '0.2vmax 0.5vmax', float: 'right', cursor: 'pointer'}}>https://www.amazonx.in/</button>
-                            <button onClick={() => {closeModal(); alert("No No NO NO")}} style={{all: 'unset', borderRadius: '5px', border: '1px solid black', padding: '0.2vmax 0.5vmax', float: 'right', cursor: 'pointer'}}>https://www.amazonn.in/</button>
-                        </div>)
-                    })
-                }
+                <div style={{display: 'flex', gap: '10px', paddingBottom: '10px'}}>
+                    <button onClick={() => {
+                        if(urlIndex+1==URLs.length) {
+                            alert("That's legitimate");
+                            setIsOpen(false);
+                        }
+                        onClickReset();
+                        setUrlIndex(urlIndex+1);
+                    }} style={{all: 'unset', borderRadius: '5px', border: '1px solid black', padding: '0.2vmax 0.5vmax', float: 'right', cursor: 'pointer'}}>{URLs[urlIndex]?.option1}</button>
+                    <button onClick={() => {closeModal(); alert("No No NO NO")}} style={{all: 'unset', borderRadius: '5px', border: '1px solid black', padding: '0.2vmax 0.5vmax', float: 'right', cursor: 'pointer'}}>{URLs[urlIndex]?.option2}</button>
+                    <button onClick={() => {closeModal(); alert("No No NO NO")}} style={{all: 'unset', borderRadius: '5px', border: '1px solid black', padding: '0.2vmax 0.5vmax', float: 'right', cursor: 'pointer'}}>{URLs[urlIndex]?.option3}</button>
+                </div>
             </Modal>
         </div>
     );
